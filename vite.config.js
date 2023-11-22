@@ -6,7 +6,7 @@ import { manifestConfig } from "./pwa.config"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/sveltepwa/', //this allow you to deploy to github pages, you may delete this line if your project is root level domain
+  // base: '/sveltepwa/', //this allow you to deploy to github pages, you may delete this line if your project is root level domain
   plugins: [
     svelte(),
     VitePWA({

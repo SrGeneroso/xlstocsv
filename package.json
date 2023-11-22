@@ -19,5 +19,9 @@
     "svelte": "^4.2.3",
     "vite": "^5.0.0",
     "vite-plugin-pwa": "^0.17.0"
+  },
+  "dependencies": {
+    "@types/xlsx": "^0.0.36",
+    "xlsx": "^0.18.5"
   }
 }
