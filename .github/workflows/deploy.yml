@@ -28,6 +28,10 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Get repository name
+        run: echo "REPO_NAME=$(echo $GITHUB_REPOSITORY | cut -d'/' -f2)" >> $GITHUB_ENV
+      - name: Set environment variables
+        run: echo "NODE_ENV=production" >> $GITHUB_ENV
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Node
