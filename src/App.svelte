@@ -4,9 +4,19 @@
   let importedSheet = null
   let exportedCSV = null
   let importedColumnNames = null
+  let json = null
+  let exportedJson = []
   let data = {
+    importFileName: '',
     importInput: '',
-    importList: [],
+    importList: [
+      'Referencia',
+      'Descripción',
+      'Cantidad',
+      'Precio',
+      '% Dto.1',
+      '% Iva'
+    ],
     exportInput: '',
     exportList: [
       'Referencia',
@@ -22,28 +32,51 @@
     let file = await event.target.files[0]
     let importData = null
     let importSheet = null
+    data.importFileName = ''
+    importedColumnNames = null
 
     if (
-      file.type === 'application/vnd.ms-excel' ||
-      file.type ===
+      file.type !== 'application/vnd.ms-excel' &&
+      file.type !==
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     ) {
-      const reader = new FileReader()
-      reader.readAsArrayBuffer(file)
-      reader.onload = () => {
-        importData = reader.result
-        importSheet = read(importData)
-        importedSheet = importSheet.Sheets[importSheet.SheetNames[0]]
-        console.log(importedSheet)
-        importedColumnNames = utils.sheet_to_json(importedSheet, {
-          header: 1
-        })[0]
-        console.log(importedColumnNames)
-      }
-    } else {
       alert('Select a spreadsheet file')
+      console.log(file.type)
       importedSheet = null
       event.target.value = ''
+      return
+    }
+    data.importFileName = file.name
+    const reader = new FileReader()
+    reader.readAsArrayBuffer(file)
+
+    //When file is ready
+    reader.onload = () => {
+      importData = reader.result
+      importSheet = read(importData)
+      importedSheet = importSheet.Sheets[importSheet.SheetNames[0]]
+
+      //Get column names so I can select them TODO
+      importedColumnNames = utils.sheet_to_json(importedSheet, {
+        header: 1
+      })[0]
+
+      //Make a json to manipulate the data.
+      json = utils.sheet_to_json(importedSheet)
+      console.log({ json })
+
+      //Map the properties to export list
+      exportedJson = json.map((item) => {
+        const newItem = {}
+        data.importList.forEach((importProp, index) => {
+          const exportProp = data.exportList[index]
+          if (item[importProp] !== undefined) {
+            newItem[exportProp] = item[importProp]
+          }
+        })
+        return newItem
+      })
+      console.log({ exportedJson })
     }
   }
 
@@ -57,7 +90,23 @@
       return
     }
 
-    exportedCSV = utils.sheet_to_csv(importedSheet)
+    const headers = Object.keys(exportedJson[0])
+    exportedCSV = [
+      headers.join(';'), // Use ';' as the separator for the headers
+      ...exportedJson.map((obj) =>
+        headers.map((header) => obj[header]).join(';')
+      )
+    ].join('\n')
+    const blob = new Blob([exportedCSV], { type: 'text/csv' })
+    const url = URL.createObjectURL(blob)
+
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `${data.importFileName}.csv` // Set the file name
+    document.body.appendChild(a)
+    a.click()
+    document.body.removeChild(a)
+    URL.revokeObjectURL(url)
   }
 
   function addToList(list, input) {
@@ -85,7 +134,10 @@
 
 <!-- List of cloumn Names  -->
 {#if importedColumnNames}
-  {importedColumnNames}
+  <pre>{importedColumnNames}</pre>
+{/if}
+{#if exportedCSV}
+  {exportedCSV}
 {/if}
 
 <!-- Input Forms -->

@@ -5,7 +5,8 @@ import { manifestConfig } from './pwa.config'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/xlstocsv/', //this allow you to deploy to github pages, you may delete this line if your project is root level domain
+  base:
+    process.env.NODE_ENV === 'production' ? `/${process.env.REPO_NAME}/` : '/', //deploying to github pages needs an extra path
   plugins: [
     svelte(),
     VitePWA({
