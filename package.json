@@ -8,7 +8,7 @@
     "generate-pwa-assets": "pwa-assets-generator --preset minimal public/logo.svg",
     "run-screenshot": "sleep 5 && node screenshots.js && sleep 10 && kill $(lsof -t -i:3000)",
     "screen": "npm-run-all --parallel dev run-screenshot",
-    "build": "npm run generate-pwa-assets && vite build",
+    "build": "npm run && vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
@@ -21,7 +21,6 @@
     "vite-plugin-pwa": "^0.17.0"
   },
   "dependencies": {
-    "@types/xlsx": "^0.0.36",
     "xlsx": "^0.18.5"
   }
 }
