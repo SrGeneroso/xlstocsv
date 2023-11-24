@@ -28,6 +28,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - name: Get repo name #Infers repo name for later use with vite build
+        run: echo "REPO_NAME=$(echo ${{ github.repository }} | cut -d'/' -f2)" >> $GITHUB_ENV
       - name: Checkout
         uses: actions/checkout@v3
       - name: Set up Node
