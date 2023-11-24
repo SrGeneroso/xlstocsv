@@ -5,7 +5,7 @@ import { manifestConfig } from './pwa.config'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/xlstocsv', //deploying to github pages needs an extra path
+  base: process.env.REPO_NAME ? `/${process.env.REPO_NAME}/` : '/', // Set base dynamically for github pages
   plugins: [
     svelte(),
     VitePWA({
@@ -13,7 +13,12 @@ export default defineConfig({
       devOptions: {
         enabled: true
       },
-      includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'mask-icon.svg'],
+      includeAssets: [
+        'favicon.svg',
+        'favicon.ico',
+        'apple-touch-icon.png',
+        'mask-icon.svg'
+      ],
       manifest: manifestConfig
     })
   ]
