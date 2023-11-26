@@ -4,12 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run generate-pwa-assets && vite",
-    "generate-pwa-assets": "pwa-assets-generator --preset minimal public/favicon.svg",
-    "run-screenshot": "sleep 5 && node screenshots.js && sleep 10 && kill $(lsof -t -i:3000)",
-    "screen": "npm-run-all --parallel dev run-screenshot",
-    "build": "npm run generate-pwa-assets && vite build",
-    "preview": "vite preview"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "pwa": "node scripts/screenshot.js dark public/ && pwa-assets-generator --preset minimal public/favicon.svg"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
