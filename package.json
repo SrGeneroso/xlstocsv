@@ -19,6 +19,7 @@
     "vite-plugin-pwa": "^0.17.0"
   },
   "dependencies": {
+    "open-props": "^1.6.20",
     "xlsx": "^0.18.5"
   }
 }

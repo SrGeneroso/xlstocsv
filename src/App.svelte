@@ -11,34 +11,39 @@
 	}
 </script>
 
-<!-- Select File -->
-<!-- <input
-	type="file"
-	id="filePicker"
-	accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-	on:change={handleSpreadsheetFile}
-	on:mouseenter={() => console.log(exportedJson === null)}
-/>
-
-<label for="filePicker" class="file-upload">
-	<span>Select File</span>
-	<input type="file" id="filePicker" accept="application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
-</label> -->
-<p>Conversion of Davasa to GDTaller</p>
-<Droplet
-	{handleFiles}
-	let:droppable
-	acceptedMimes={['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']}
-	maxFilesAllowed={1}
->
-	<div class="zone" class:droppable>Select or drop files here</div>
-</Droplet>
+<h1>SRGDTools</h1>
+<p>Conversion de albaranes xls a GDTaller</p>
+<div class="dropbox">
+	<Droplet
+		{handleFiles}
+		let:droppable
+		acceptedMimes={['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']}
+		maxFilesAllowed={1}
+	>
+		<div class="zone" class:droppable>Arrastra o selecciona tu archivo .xls</div>
+	</Droplet>
+</div>
 
 <style>
+	.dropbox {
+		padding: var(--size-2);
+	}
+
 	.zone {
-		border: 1px dotted red;
-		width: 50vw;
-		height: 3rem;
-		background-color: gray;
+		background-color: var(--surface-2);
+		border: 1px dotted var(--orange-1);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		text-align: center;
+		width: var(--size-fluid-10);
+		height: var(--size-fluid-6);
+		border-radius: var(--radius-3);
+		box-shadow: var(--shadow-4);
+		transition: all 0.3s ease-in-out;
+		&:hover {
+			transform: scale(1.05, 1.05);
+			box-shadow: var(--shadow-5);
+		}
 	}
 </style>

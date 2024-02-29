@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  open-props:
+    specifier: ^1.6.20
+    version: 1.6.20
   xlsx:
     specifier: ^0.18.5
     version: 0.18.5
@@ -3259,6 +3262,10 @@ packages:
     dependencies:
       wrappy: 1.0.2
     dev: true
+
+  /open-props@1.6.20:
+    resolution: {integrity: sha512-RwDLtSd785gWnotUZC1rICmFWkeNNQzOd91k3DL0jrwQ7xV5wi9EwGKDK2eiOyPl11/Vx+Btc+dIwCBD2MBpxw==}
+    dev: false
 
   /pac-proxy-agent@7.0.1:
     resolution: {integrity: sha512-ASV8yU4LLKBAjqIPMbrgtaKIvxQri/yh2OpI+S6hVa9JRkUI3Y3NPFbfngDtY7oFtSMD3w31Xns89mDa3Feo5A==}

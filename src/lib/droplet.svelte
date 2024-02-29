@@ -130,15 +130,6 @@
 	{name}
 />
 
-<!-- <style lang="sass">
-	div
-		cursor: pointer
-	[disabled]
-		cursor: default
-	input
-		display: none
-</style> -->
-
 <style>
 	div {
 		cursor: pointer;
