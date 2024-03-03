@@ -91,6 +91,7 @@
 	}
 
 	let inputFiles: FileList
+
 	function handleChange() {
 		const acceptedFiles = getAcceptedFiles(inputFiles)
 		if (acceptedFiles && acceptedFiles.length > 0) {

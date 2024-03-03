@@ -14,8 +14,29 @@ export let data = {
 	exportList: ['Referencia', 'Descripcion', 'Cantidad', 'Precio', 'Descuento', 'IVA']
 }
 
+export async function readXlsHeaders(file) {
+	return new Promise((resolve, reject) => {
+		const reader = new FileReader()
+		reader.onload = () => {
+			const importData = reader.result
+			const importSheet = read(importData) // Assuming 'read' is a function that can parse the file
+			const importedSheet = importSheet.Sheets[importSheet.SheetNames[0]]
+
+			const importedColumnNames = utils.sheet_to_json(importedSheet, {
+				header: 1
+			})[0]
+
+			resolve(importedColumnNames)
+		}
+		reader.onerror = error => {
+			reject(error)
+		}
+		reader.readAsArrayBuffer(file)
+	})
+}
+
 export async function handleSpreadsheetFile(userFile) {
-	let file = userFile[0]
+	const file = userFile[0]
 	let importData = null
 	let importSheet = null
 	data.importFileName = ''
