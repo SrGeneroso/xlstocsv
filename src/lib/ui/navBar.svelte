@@ -141,7 +141,7 @@
 			height: 0vh;
 		}
 		#nav-check:checked ~ .nav-links {
-			height: 100vh;
+			height: calc(100vh - 100%);
 			overflow-y: hidden;
 		}
 	}
