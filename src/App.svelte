@@ -76,6 +76,8 @@
 {/if}
 
 <style>
+	NavBar {
+	}
 	.dropbox {
 		padding: var(--size-2);
 	}
