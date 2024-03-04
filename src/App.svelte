@@ -15,8 +15,15 @@
 	//query structure? ?mode=createProfile&profileName=davasa&Referencia=Referencia&Descripcion=Descripción&Cantidad=Cantidad&Precio=Precio&Descuento=%25%20Dto.1
 	// i need to encode decode uri
 
-	let headers
-	let items2 = []
+	let xlsColumnNames
+	let columnNamesSelected = []
+	let columnsNamesToExport = [
+		{ id: 'Referencia', name: 'Referencia' },
+		{ id: 'Descripcion', name: 'Descripcion' },
+		{ id: 'Cantidad', name: 'Cantidad' },
+		{ id: 'Precio', name: 'Precio' },
+		{ id: 'Descuento', name: 'Descuento' }
+	]
 
 	async function getHeaders(file) {
 		let headers = await readXlsHeaders(file[0])
@@ -35,8 +42,6 @@
 	title="SRG GDTools"
 	links={[
 		{ name: 'Crear Perfil', url: '?mode=createProfile' },
-		{ name: 'Github', url: 'https://github.com/SrGeneroso/xlstocsv' },
-		{ name: 'Github', url: 'https://github.com/SrGeneroso/xlstocsv' },
 		{ name: 'Github', url: 'https://github.com/SrGeneroso/xlstocsv' }
 	]}
 />
@@ -48,12 +53,12 @@
 {:else if appMode === 'createProfile'}
 	<!-- Create Profile Page -->
 	<p>TODO - input profile name</p>
-	{#if !headers}
+	{#if !xlsColumnNames}
 		<div class="dropbox">
 			<p>Arrastra un archivo .xls para ver los nombres de las columnas</p>
 			<Droplet
 				handleFiles={async file => {
-					headers = await getHeaders(file)
+					xlsColumnNames = await getHeaders(file)
 				}}
 				let:droppable
 				acceptedMimes={['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']}
@@ -62,11 +67,14 @@
 				<div class="zone" class:droppable>Arrastra o selecciona tu archivo .xls</div>
 			</Droplet>
 		</div>
-	{:else if headers}
-		<div class="headers">
-			<Dnd items={headers} />
-			<Dnd items={items2} />
-		</div>
+	{:else if xlsColumnNames}
+		<!-- {@debug xlsColumnNames} -->
+
+		<Dnd type="importedColumns" items={xlsColumnNames} />
+		<p>Arrastra las columnas del archivo importado al apartado inferior en el orden que quieres que sean exportadas</p>
+		<Dnd type="importedColumns" items={columnNamesSelected} />
+		<p>Añade, elimina y reordena las columanas que quires que se exporten.</p>
+		<Dnd type="targetColumns" items={columnsNamesToExport} />
 	{/if}
 {:else if appMode === 'usingProfile'}
 	<!-- Using Profile Page -->
@@ -76,8 +84,6 @@
 {/if}
 
 <style>
-	NavBar {
-	}
 	.dropbox {
 		padding: var(--size-2);
 	}

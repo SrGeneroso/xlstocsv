@@ -101,7 +101,7 @@
 			display: flex;
 			flex-direction: column;
 			padding-top: var(--size-3);
-			transition: all 0.3s ease-in;
+			transition: all 0.2s ease-in;
 		}
 		.nav-btn {
 			position: absolute;
