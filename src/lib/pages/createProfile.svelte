@@ -40,7 +40,7 @@
 		for (let i = 0; i < columnsNamesToExport.length; i++) {
 			params[columnNamesSelected[i].name] = columnsNamesToExport[i].name
 		}
-		profileURL = `/?mode=usingProfile&profileName=${encodeURIComponent(profileName)}&data=${encodeURIComponent(JSON.stringify(params))}`
+		profileURL = `?mode=usingProfile&profileName=${encodeURIComponent(profileName)}&data=${encodeURIComponent(JSON.stringify(params))}`
 	}
 </script>
 

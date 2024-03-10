@@ -13,7 +13,7 @@
 	<div class="nav">
 		<input id="nav-check" type="checkbox" />
 		<div class="nav-header">
-			<a class="nav-title" href="/">{title}</a>
+			<a class="nav-title" href="?">{title}</a>
 		</div>
 		<div class="nav-btn">
 			<label for="nav-check">
