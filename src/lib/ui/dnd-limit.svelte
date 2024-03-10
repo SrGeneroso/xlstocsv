@@ -1,18 +1,32 @@
 <script>
 	import { flip } from 'svelte/animate'
 	import { dndzone } from 'svelte-dnd-action'
+
 	export let items
 	export let type
+	export let maxItems = 5
+	let dropFromOthersDisabled = false
+
 	const flipDurationMs = 300
+
 	function handleDndConsider(e) {
 		items = e.detail.items
+		if (items.length < maxItems) {
+			dropFromOthersDisabled = false
+		}
 	}
 	function handleDndFinalize(e) {
 		items = e.detail.items
+		dropFromOthersDisabled = items.length >= maxItems
 	}
 </script>
 
-<section class="dnd-zone" use:dndzone={{ items, flipDurationMs, type }} on:consider={handleDndConsider} on:finalize={handleDndFinalize}>
+<section
+	class="dnd-zone"
+	use:dndzone={{ items, flipDurationMs, type, dropFromOthersDisabled, centreDraggedOnCursor: true }}
+	on:consider={handleDndConsider}
+	on:finalize={handleDndFinalize}
+>
 	{#each items as item (item.id)}
 		<div class="dnd-item" animate:flip={{ duration: flipDurationMs }}>
 			{item.name}
@@ -35,7 +49,9 @@
 		gap: var(--size-1);
 	}
 	.dnd-item {
+		display: flex;
 		padding-inline: var(--size-1);
+
 		background-color: var(--surface-3);
 		box-shadow: var(--shadow-2);
 		border: 0.1rem solid var(--surface-2);

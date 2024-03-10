@@ -19,14 +19,17 @@ export async function readXlsHeaders(file) {
 		const reader = new FileReader()
 		reader.onload = () => {
 			const importData = reader.result
-			const importSheet = read(importData) // Assuming 'read' is a function that can parse the file
+			const importSheet = read(importData)
 			const importedSheet = importSheet.Sheets[importSheet.SheetNames[0]]
-
+			// console.log(importedSheet)
 			const importedColumnNames = utils.sheet_to_json(importedSheet, {
 				header: 1
 			})[0]
-
-			resolve(importedColumnNames)
+			const importedDataExample = utils.sheet_to_json(importedSheet, {
+				header: 1
+			})[1]
+			// console.log(importedColumnNames)
+			resolve({ importedColumnNames, importedDataExample })
 		}
 		reader.onerror = error => {
 			reject(error)
