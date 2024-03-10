@@ -2,12 +2,11 @@
 	import NavBar from './lib/ui/navBar.svelte'
 	import CreateProfile from './lib/pages/createProfile.svelte'
 	import UsingProfile from './lib/pages/usingProfile.svelte'
-	let urlParams = Object.fromEntries(new URLSearchParams(window.location.search).entries())
-	let appMode = urlParams.mode
+	let appMode = Object.fromEntries(new URLSearchParams(window.location.search).entries()).mode
 </script>
 
 <NavBar
-	title="SRG GDTools"
+	title="GDTools"
 	links={[
 		{ name: 'Crear Perfil', url: '?mode=createProfile' },
 		{ name: 'Github', url: 'https://github.com/SrGeneroso/xlstocsv' }
@@ -16,15 +15,22 @@
 <body>
 	{#if !appMode}
 		<!-- Home Page -->
-		<h1>SRGDTools</h1>
-		<h2>Conversion de albaranes xls a GDTaller</h2>
-		<p>TODO, manual de como usar la app</p>
+		<h1>GDTools</h1>
+		<br />
+		<h2>XLStoCSV</h2>
+		<br />
+		<p>Crea un perfil basado en las columnas de tus archivos y define las columnas que quieres exportar.</p>
+		<br />
+		<p>
+			Dirigete a la seccion de <a href="?mode=createProfile">Crear Perfil</a> para crear tu link personalizado<br /> ¡No te olvides de guardar el link
+			de tu perfil personalizado!
+		</p>
 	{:else if appMode === 'createProfile'}
 		<CreateProfile />
 	{:else if appMode === 'usingProfile'}
 		<UsingProfile />
 	{:else}
-		Ooops, se supone que deberia haber algo aqui
+		<p>Ooops, la URL introducida no es correcta.</p>
 	{/if}
 </body>
 

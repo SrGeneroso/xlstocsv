@@ -44,6 +44,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Crear Perfil GDTools</title>
+</svelte:head>
+
 {#if !xlsColumnNames}
 	<div class="upload-file-dropbox">
 		<p>Arrastra un archivo .xls para ver los nombres de las columnas</p>

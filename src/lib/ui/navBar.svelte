@@ -1,7 +1,7 @@
 <script>
 	export let title = 'navbar title'
 	export let links = [
-		{ name: 'Home', url: '/' },
+		{ name: 'Home', url: '?' },
 		{ name: 'test', url: 'https://google.com' }
 	]
 	function isLocalURL(url) {
@@ -9,6 +9,9 @@
 	}
 </script>
 
+<svelte:head>
+	<title>{title}</title>
+</svelte:head>
 <header>
 	<div class="nav">
 		<input id="nav-check" type="checkbox" />

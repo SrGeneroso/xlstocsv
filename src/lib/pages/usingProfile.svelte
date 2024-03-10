@@ -11,6 +11,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>{`${profileName} to CSV - GDTools`}</title>
+</svelte:head>
+
 <div class="dropbox">
 	{#if profileName}
 		<div class="dropbox-title">
