@@ -1,11 +1,11 @@
 <script>
-	import { exportedJson, data, readXlsHeaders, handleSpreadsheetFile, spreadsheetConversion } from '../xls/Conversion'
+	import { readXlsHeaders } from '../xls/Conversion'
 	import Droplet from '../ui//droplet.svelte'
-	import NavBar from '../ui//navBar.svelte'
 	import Dnd from '../ui/dnd.svelte'
 	import DndLimit from '../ui/dnd-limit.svelte'
 	import ExampleTable from '../ui/exampleTable.svelte'
 	import DndDelete from '../ui/dnd-delete.svelte'
+
 	let xlsColumnNames
 	let columnNamesSelected = []
 	let columnsNamesToExport = [
@@ -13,12 +13,13 @@
 		{ id: 'Descripcion', name: 'Descripcion' },
 		{ id: 'Cantidad', name: 'Cantidad' },
 		{ id: 'Precio', name: 'Precio' },
-		{ id: 'Descuento', name: 'Referencia' }
+		{ id: 'Descuento', name: 'Descuento' },
+		{ id: 'IVA', name: 'IVA' }
 	]
 	let columnsToDelete = []
 	let columnNameToAdd = ''
 	let profileName = ''
-	let profileURL
+	let profileURL = ''
 
 	function addToColumnNames() {
 		if (!columnNameToAdd) return
@@ -35,9 +36,11 @@
 		}))
 	}
 	function createProfile() {
-		//get all the data
-		//parse that data into an url encoded
-		//assign the url to the link
+		let params = {}
+		for (let i = 0; i < columnsNamesToExport.length; i++) {
+			params[columnNamesSelected[i].name] = columnsNamesToExport[i].name
+		}
+		profileURL = `/?mode=usingProfile&profileName=${encodeURIComponent(profileName)}&data=${encodeURIComponent(JSON.stringify(params))}`
 	}
 </script>
 
@@ -69,11 +72,11 @@
 
 	<div class="columns-to-import section-border">
 		Columnas a exportar
-		<!-- <DndLimit type="importedColumns" items={columnNamesSelected} maxItems={columnsNamesToExport.length} /> -->
 		<DndLimit type="importedColumns" bind:items={columnNamesSelected} maxItems={columnsNamesToExport.length} />
 	</div>
 	<div class="columns-to-export section-border">
 		<p>Añade, elimina y reordena las columnas que quieres que se exporten.</p>
+		<p>Ejemplo, Referencia; Descripcion; Cantidad; Precio; Descuento; IVA.</p>
 
 		<div class="columns-to-export">
 			<Dnd bind:items={columnsNamesToExport} type="targetColumns" />
@@ -88,12 +91,16 @@
 		</div>
 	</div>
 	<div class="create-profile-exec section-border">
-		<form on:submit|preventDefault={createProfile}>
-			<input bind:value={profileName} placeholder="Nombre de perfil" type="text" />
-			<button type="submit" disabled={columnNamesSelected.length != columnsNamesToExport.length || profileName.trim().length === 0}
-				>Crear Perfil</button
-			>
-		</form>
+		{#if profileURL}
+			Arrastra este link <a href={profileURL}>{profileName} a CSV</a> a los marcadores de tu navegador o al escritorio para crear un acceso directo
+		{:else}
+			<form on:submit|preventDefault={createProfile}>
+				<input bind:value={profileName} placeholder="Nombre de perfil" type="text" />
+				<button type="submit" disabled={columnNamesSelected.length != columnsNamesToExport.length || profileName.trim().length === 0}
+					>Crear Perfil</button
+				>
+			</form>
+		{/if}
 	</div>
 {/if}
 

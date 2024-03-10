@@ -48,7 +48,6 @@
 		display: flex;
 		margin-inline: var(--size-fluid-3);
 		padding: 0 var(--size-3);
-		/* border: 1px solid red; */
 	}
 	.nav-title {
 		font-weight: var(--font-weight-7);
@@ -65,8 +64,6 @@
 		gap: var(--size-3);
 		padding: 0 var(--size-3);
 		align-items: center;
-
-		/* border: 1px solid green; */
 	}
 
 	.nav-links > a {
